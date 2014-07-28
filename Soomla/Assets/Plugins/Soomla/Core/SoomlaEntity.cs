@@ -24,13 +24,16 @@ namespace Soomla {
 	/// of entitys, each one will extend this class. Each one of the various types extends
 	/// <c>SoomlaEntity</c> and adds its own behavior to it.
 	/// </summary>
-	public abstract class SoomlaEntity {
+	public abstract class SoomlaEntity<T> {
 
 		private const string TAG = "SOOMLA SoomlaEntity";
 		
 		public string Name;
 		public string Description;
-		public string ID;
+		protected string _id;
+		public string ID {
+			get { return _id; }
+		}
 
 		protected SoomlaEntity (string id) 
 			: this(id, "", "")
@@ -46,7 +49,7 @@ namespace Soomla {
 		{
 			this.Name = name;
 			this.Description = description;
-			this.ID = id;
+			this._id = id;
 		}
 		
 #if UNITY_ANDROID && !UNITY_EDITOR
@@ -62,6 +65,11 @@ namespace Soomla {
 		/// </summary>
 		/// <param name="jsonEntity">A JSONObject representation of the wanted <c>SoomlaEntity</c>.</param>
 		protected SoomlaEntity(JSONObject jsonEntity) {
+			if (jsonEntity[JSONConsts.SOOM_ENTITY_ID] == null) {
+				SoomlaUtils.LogError(TAG, "This is BAD! We don't have ID in the given JSONObject. Stopping here. JSON: " + jsonEntity.print());
+				return;
+			}
+
 			if (jsonEntity[JSONConsts.SOOM_ENTITY_NAME]) {
 				this.Description = jsonEntity[JSONConsts.SOOM_ENTITY_NAME].str;
 			} else {
@@ -72,7 +80,7 @@ namespace Soomla {
 			} else {
 				this.Description = "";
 			}
-			this.ID = jsonEntity[JSONConsts.SOOM_ENTITY_ID].str;
+			this._id = jsonEntity[JSONConsts.SOOM_ENTITY_ID].str;
 		}
 		
 		/// <summary>
@@ -80,10 +88,16 @@ namespace Soomla {
 		/// </summary>
 		/// <returns>A <c>JSONObject</c> representation of the current <c>SoomlaEntity</c>.</returns>
 		public virtual JSONObject toJSONObject() {
+			if (string.IsNullOrEmpty(this._id)) {
+				SoomlaUtils.LogError(TAG, "This is BAD! We don't have ID in the this SoomlaEntity. Stopping here.");
+				return null;
+			}
+
 			JSONObject obj = new JSONObject(JSONObject.Type.OBJECT);
 			obj.AddField(JSONConsts.SOOM_ENTITY_NAME, this.Name);
 			obj.AddField(JSONConsts.SOOM_ENTITY_DESCRIPTION, this.Description);
-			obj.AddField(JSONConsts.SOOM_ENTITY_ID, this.ID);
+			obj.AddField(JSONConsts.SOOM_ENTITY_ID, this._id);
+			obj.AddField(JSONConsts.SOOM_CLASSNAME, GetType().Name);
 			
 			return obj;
 		}
@@ -107,17 +121,17 @@ namespace Soomla {
 			}
 			
 			// If parameter cannot be cast to Point return false.
-			SoomlaEntity g = obj as SoomlaEntity;
+			SoomlaEntity<T> g = obj as SoomlaEntity<T>;
 			if ((System.Object)g == null)
 			{
 				return false;
 			}
 			
 			// Return true if the fields match:
-			return (ID == g.ID);
+			return (_id == g._id);
 		}
 		
-		public bool Equals(SoomlaEntity g)
+		public bool Equals(SoomlaEntity<T> g)
 		{
 			// If parameter is null return false:
 			if ((object)g == null)
@@ -126,15 +140,15 @@ namespace Soomla {
 			}
 			
 			// Return true if the fields match:
-			return (ID == g.ID);
+			return (_id == g._id);
 		}
 		
 		public override int GetHashCode()
 		{
-			return ID.GetHashCode();
+			return _id.GetHashCode();
 		}
 		
-		public static bool operator ==(SoomlaEntity a, SoomlaEntity b)
+		public static bool operator ==(SoomlaEntity<T> a, SoomlaEntity<T> b)
 		{
 			// If both are null, or both are same instance, return true.
 			if (System.Object.ReferenceEquals(a, b))
@@ -149,14 +163,19 @@ namespace Soomla {
 			}
 			
 			// Return true if the fields match:
-			return a.ID == b.ID;
+			return a._id == b._id;
 		}
 		
-		public static bool operator !=(SoomlaEntity a, SoomlaEntity b)
+		public static bool operator !=(SoomlaEntity<T> a, SoomlaEntity<T> b)
 		{
 			return !(a == b);
 		}
 
+		public virtual T Clone(string newId) {
+			JSONObject obj = this.toJSONObject();
+			obj.AddField(JSONConsts.SOOM_ENTITY_ID, newId);
+			return (T) Activator.CreateInstance(this.GetType(), new object[] { obj });
+		}
 	}
 }
 

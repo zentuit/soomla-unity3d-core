@@ -29,7 +29,7 @@ namespace Soomla {
 	/// In the Profile module, rewards can be attached to various actions. For example:
 	/// You can give your user 100 coins for logging in through Facebook.
 	/// </summary>
-	public abstract class Reward : SoomlaEntity {
+	public abstract class Reward : SoomlaEntity<Reward> {
 		private static string TAG = "SOOMLA Reward";
 
 		public bool   Repeatable;
@@ -73,7 +73,6 @@ namespace Soomla {
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
 			obj.AddField(JSONConsts.SOOM_REWARD_REPEAT, Repeatable);
-			obj.AddField(JSONConsts.SOOM_CLASSNAME, GetType().Name);
 			
 			return obj;
 		}
@@ -103,7 +102,7 @@ namespace Soomla {
 		public bool Take() {
 
 			if (!RewardStorage.IsRewardGiven(this)) {
-				SoomlaUtils.LogDebug(TAG, "Reward not given. id: " + ID);
+				SoomlaUtils.LogDebug(TAG, "Reward not given. id: " + _id);
 				return false;
 			}
 			
@@ -117,7 +116,7 @@ namespace Soomla {
 
 		public bool Give() {
 			if (RewardStorage.IsRewardGiven(this) && !Repeatable) {
-				SoomlaUtils.LogDebug(TAG, "Reward was already given and is not repeatable. id: " + ID);
+				SoomlaUtils.LogDebug(TAG, "Reward was already given and is not repeatable. id: " + _id);
 				return false;
 			}
 			
