@@ -56,7 +56,7 @@ namespace Soomla {
 		protected SoomlaEntity(AndroidJavaObject jniSoomlaEntity) {
 			this.Name = jniSoomlaEntity.Call<string>("getName");
 			this.Description = jniSoomlaEntity.Call<string>("getDescription");
-			this.ID = jniSoomlaEntity.Call<string>("getID");
+			this._id = jniSoomlaEntity.Call<string>("getID");
 		}
 #endif
 		/// <summary>
