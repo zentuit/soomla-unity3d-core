@@ -7,15 +7,6 @@
 #import "UnitySoomlaCoreEventDispatcher.h"
 #import "SoomlaConfig.h"
 
-char* AutonomousStringCopy (const char* string)
-{
-    if (string == NULL)
-       return NULL;
-
-    char* res = (char*)malloc(strlen(string) + 1);
-    strcpy(res, string);
-    return res;
-}
 extern "C" {
     void soomlaCore_Init(const char* secret, bool debug) {
         LogDebug(@"SOOMLA Unity UnitySoomlaCore", @"Initializing SoomlaEventHandler ...");
