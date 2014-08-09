@@ -32,7 +32,7 @@ namespace Soomla {
 	public abstract class Reward : SoomlaEntity<Reward> {
 		private static string TAG = "SOOMLA Reward";
 
-		public bool   Repeatable;
+		public Schedule Schedule;
 		
 		public bool Owned {
 			get {
@@ -48,7 +48,7 @@ namespace Soomla {
 		public Reward(string id, string name)
 			: base(id, name, "")
 		{
-			Repeatable = false;
+			Schedule = Schedule.AnyTimeOnce();
 		}
 
 		/// <summary>
@@ -58,11 +58,11 @@ namespace Soomla {
 		public Reward(JSONObject jsonReward) :
 			base(jsonReward)
 		{
-			JSONObject repeatObj = jsonReward[JSONConsts.SOOM_REWARD_REPEAT];
-			if (repeatObj) {
-				Repeatable = repeatObj.b;
+			JSONObject scheduleObj = jsonReward[JSONConsts.SOOM_SCHEDULE];
+			if (scheduleObj) {
+				Schedule = new Schedule(scheduleObj);
 			} else {
-				Repeatable = false;
+				Schedule = null;
 			}
 		}
 
@@ -72,7 +72,9 @@ namespace Soomla {
 		/// <returns>A JSONObject representation of <c>Reward</c>.</return>
 		public override JSONObject toJSONObject() {
 			JSONObject obj = base.toJSONObject();
-			obj.AddField(JSONConsts.SOOM_REWARD_REPEAT, Repeatable);
+			if (Schedule != null) {
+				obj.AddField(JSONConsts.SOOM_SCHEDULE, Schedule.toJSONObject());
+			}
 			
 			return obj;
 		}
@@ -90,8 +92,7 @@ namespace Soomla {
 			return reward;
 		}
 
-#if UNITY_ANDROID 
-		//&& !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
 		public AndroidJavaObject toJNIObject() {
 			using(AndroidJavaClass jniRewardClass = new AndroidJavaClass("com.soomla.rewards.Reward")) {
 				return jniRewardClass.CallStatic<AndroidJavaObject>("fromJSONString", toJSONObject().print());
@@ -115,8 +116,9 @@ namespace Soomla {
 		}
 
 		public bool Give() {
-			if (RewardStorage.IsRewardGiven(this) && !Repeatable) {
-				SoomlaUtils.LogDebug(TAG, "Reward was already given and is not repeatable. id: " + _id);
+
+			if (!Schedule.Approve(RewardStorage.GetTimesGiven(this))) {
+				SoomlaUtils.LogDebug(TAG, "(Give) Reward is not approved by Schedule. id: " + _id);
 				return false;
 			}
 			

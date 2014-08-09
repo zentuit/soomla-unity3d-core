@@ -44,11 +44,19 @@ namespace Soomla
 		}
 
 		public static void SetRewardStatus(Reward reward, bool give, bool notify) {
-			instance._setRewardStatus(reward, give, notify);
+			instance._setRewardTimesGiven(reward, give, notify);
 		}
 
 		public static bool IsRewardGiven(Reward reward) {
-			return instance._isRewardGiven(reward);
+			return GetTimesGiven(reward) > 0;
+		}
+
+		public static int GetTimesGiven(Reward reward) {
+			return instance._getTimesGiven(reward);
+		}
+
+		public static DateTime GetLastGivenTime(Reward reward) {
+			return instance._getLastGivenTime(reward);
 		}
 
 		/// <summary>
@@ -60,36 +68,6 @@ namespace Soomla
 
 		public static void SetLastSeqIdxGiven(SequenceReward reward, int idx) {
 			instance._setLastSeqIdxGiven(reward, idx);
-		}
-
-		
-		virtual protected void _setRewardStatus(Reward reward, bool give, bool notify) {
-#if UNITY_EDITOR
-			string key = keyRewardGiven(reward.ID);
-			
-			if (give) {
-				PlayerPrefs.SetString(key, "yes");
-				
-				if (notify) {
-					CoreEvents.OnRewardGiven(reward);
-				}
-			} else {
-				PlayerPrefs.DeleteKey(key);
-				if (notify) {
-					CoreEvents.OnRewardTaken(reward);
-				}
-			}
-#endif
-		}
-
-		virtual protected bool _isRewardGiven(Reward reward) {
-#if UNITY_EDITOR
-			string key = keyRewardGiven(reward.ID);
-			string val = PlayerPrefs.GetString (key);
-			return !string.IsNullOrEmpty(val);
-#else
-			return false;
-#endif
 		}
 
 		virtual protected int _getLastSeqIdxGiven(SequenceReward seqReward) {
@@ -112,6 +90,54 @@ namespace Soomla
 #endif
 		}
 
+		virtual protected void _setRewardTimesGiven(Reward reward, bool up, bool notify) {
+#if UNITY_EDITOR
+			int total = _getTimesGiven(reward) + (up ? 1 : -1);
+			string key = keyRewardTimesGiven(reward.ID);
+			PlayerPrefs.SetString(key, total.ToString());
+
+			if (up) {
+				key = keyRewardLastGiven(reward.ID);
+				PlayerPrefs.SetString(key, (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond).ToString());
+			}
+
+			if (notify) {
+				if (up) {
+					CoreEvents.OnRewardGiven(reward);
+				} else {
+					CoreEvents.OnRewardTaken(reward);
+				}
+			}
+#endif
+		}
+
+		virtual protected int _getTimesGiven(Reward reward) {
+#if UNITY_EDITOR
+			string key = keyRewardTimesGiven(reward.ID);
+			string val = PlayerPrefs.GetString (key);
+			if (string.IsNullOrEmpty(val)) {
+				return 0;
+			}
+			return int.Parse(val);
+#else
+			return 0;
+#endif
+		}
+
+		virtual protected DateTime _getLastGivenTime(Reward reward) {
+#if UNITY_EDITOR
+			string key = keyRewardLastGiven(reward.ID);
+			string val = PlayerPrefs.GetString (key);
+			if (string.IsNullOrEmpty(val)) {
+				return default(DateTime);
+			}
+			long timeMillis = Convert.ToInt64(val);
+			TimeSpan time = TimeSpan.FromMilliseconds(timeMillis);
+			return new DateTime(time.Ticks);
+#else
+			return null;
+#endif
+		}
 
 
 		/** keys **/
@@ -120,12 +146,16 @@ namespace Soomla
 			return CoreSettings.DB_KEY_PREFIX + "rewards." + rewardId + "." + postfix;
 		}
 		
-		private static string keyRewardGiven(string rewardId) {
-			return keyRewards(rewardId, "given");
-		}
-		
 		private static string keyRewardIdxSeqGiven(string rewardId) {
 			return keyRewards(rewardId, "seq.idx");
+		}
+
+		private static string keyRewardTimesGiven(string rewardId) {
+			return keyRewards(rewardId, "timesGiven");
+		}
+
+		private static string keyRewardLastGiven(string rewardId) {
+			return keyRewards(rewardId, "lastGiven");
 		}
 #endif
 	}

@@ -38,7 +38,6 @@ namespace Soomla {
 			: base(id, name)
 		{
 			Rewards = rewards;
-			Repeatable = true;
 		}
 
 		/// <summary>
@@ -53,7 +52,6 @@ namespace Soomla {
 			foreach(JSONObject rewardObj in rewardsObj) {
 				Rewards.Add(Reward.fromJSONObject(rewardObj));
 			}
-			Repeatable = true;
 		}
 
 		/// <summary>

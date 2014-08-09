@@ -21,24 +21,6 @@ namespace Soomla {
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 		
-		override protected void _setRewardStatus(Reward reward, bool give, bool notify) {
-			AndroidJNI.PushLocalFrame(100);
-			using(AndroidJavaClass jniRewardStorage = new AndroidJavaClass("com.soomla.data.RewardStorage")) {
-				jniRewardStorage.CallStatic("setRewardStatus", reward.toJNIObject(), give, notify);
-			}
-			AndroidJNI.PopLocalFrame(IntPtr.Zero);
-		}
-		
-		override protected bool _isRewardGiven(Reward reward) {
-			bool given = false;
-			AndroidJNI.PushLocalFrame(100);
-			using(AndroidJavaClass jniRewardStorage = new AndroidJavaClass("com.soomla.data.RewardStorage")) {
-				given = jniRewardStorage.CallStatic<bool>("isRewardGiven", reward.toJNIObject());
-			}
-			AndroidJNI.PopLocalFrame(IntPtr.Zero);
-			return given;
-		}
-		
 		override protected int _getLastSeqIdxGiven(SequenceReward reward) {
 			int idx = -1;
 			AndroidJNI.PushLocalFrame(100);
@@ -56,6 +38,38 @@ namespace Soomla {
 			}
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		}
+		
+		override protected void _setRewardTimesGiven(Reward reward, bool up, bool notify) {
+
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniRewardStorage = new AndroidJavaClass("com.soomla.data.RewardStorage")) {
+				jniRewardStorage.CallStatic("setRewardTimesGiven", reward.toJNIObject(), up, notify);
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+		}
+		
+		override protected int _getTimesGiven(Reward reward) {
+			int times = 0;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniRewardStorage = new AndroidJavaClass("com.soomla.data.RewardStorage")) {
+				times = jniRewardStorage.CallStatic<bool>("getTimesGiven", reward.toJNIObject());
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+			return times;
+		}
+		
+		override protected DateTime _getLastGivenTime(Reward reward) {
+			long lastTime = 0;
+			AndroidJNI.PushLocalFrame(100);
+			using(AndroidJavaClass jniRewardStorage = new AndroidJavaClass("com.soomla.data.RewardStorage")) {
+				lastTime = jniRewardStorage.CallStatic<long>("getLastGivenTimeMillis", reward.toJNIObject());
+			}
+			AndroidJNI.PopLocalFrame(IntPtr.Zero);
+
+			TimeSpan time = TimeSpan.FromMilliseconds(lastTime);
+			return new DateTime(time.Ticks);
+		}
+
 
 #endif
 	}
