@@ -52,7 +52,7 @@ namespace Soomla {
 			int times = 0;
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniRewardStorage = new AndroidJavaClass("com.soomla.data.RewardStorage")) {
-				times = jniRewardStorage.CallStatic<bool>("getTimesGiven", reward.toJNIObject());
+				times = jniRewardStorage.CallStatic<int>("getTimesGiven", reward.toJNIObject());
 			}
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 			return times;

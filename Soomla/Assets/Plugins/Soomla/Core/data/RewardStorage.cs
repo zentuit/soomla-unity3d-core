@@ -93,6 +93,8 @@ namespace Soomla
 		virtual protected void _setRewardTimesGiven(Reward reward, bool up, bool notify) {
 #if UNITY_EDITOR
 			int total = _getTimesGiven(reward) + (up ? 1 : -1);
+			if(total<0) total = 0;
+
 			string key = keyRewardTimesGiven(reward.ID);
 			PlayerPrefs.SetString(key, total.ToString());
 

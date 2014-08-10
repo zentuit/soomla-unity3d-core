@@ -61,9 +61,11 @@ namespace Soomla {
 		
 		override protected int _getTimesGiven(Reward reward) {
 			string rewardJson = reward.toJSONObject().ToString();
-			return rewardStorage_GetTimesGiven(rewardJson);
+			int times = rewardStorage_GetTimesGiven(rewardJson);
+			SoomlaUtils.LogDebug("SOOMLA/UNITY RewardStorageIOS", string.Format("reward {0} given={1}", reward.ID, times));
+			return times;
 		}
-		
+
 		override protected DateTime _getLastGivenTime(Reward reward) {
 			string rewardJson = seqReward.toJSONObject().ToString();
 			long lastTime = rewardStorage_GetLastGivenTimeMillis(rewardJson);
