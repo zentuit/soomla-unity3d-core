@@ -19,9 +19,9 @@ using System;
 namespace Soomla {
 
 	/// <summary>
-	/// This is the parent class of all entitys in the application.
-	/// Almost every entity in your virtual economy will be a entity. There are many types
-	/// of entitys, each one will extend this class. Each one of the various types extends
+	/// This is the parent class of all entities in the application.
+	/// Almost every entity in your virtual economy will be an entity. There are many types
+	/// of entities, each one will extend this class. Each one of the various types extends
 	/// <c>SoomlaEntity</c> and adds its own behavior to it.
 	/// </summary>
 	public abstract class SoomlaEntity<T> {
