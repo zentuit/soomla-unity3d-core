@@ -115,9 +115,13 @@ namespace Soomla {
 			return false;
 		}
 
+		public bool CanGive() {
+			return Schedule.Approve(RewardStorage.GetTimesGiven(this));
+		}
+
 		public bool Give() {
 
-			if (!Schedule.Approve(RewardStorage.GetTimesGiven(this))) {
+			if (!CanGive()) {
 				SoomlaUtils.LogDebug(TAG, "(Give) Reward is not approved by Schedule. id: " + _id);
 				return false;
 			}
