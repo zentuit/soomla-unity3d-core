@@ -28,6 +28,9 @@ namespace Soomla {
 	/// "Mayor" badge (<code>BadgeReward</code>) and a speed boost (<code>VirtualItemReward</code>)
 	/// </summary>
 	public class RandomReward : Reward {
+
+		private static string TAG = "SOOMLA RandomReward";
+
 		public List<Reward> Rewards;
 		public Reward LastGivenReward;
 
@@ -40,6 +43,9 @@ namespace Soomla {
 		public RandomReward(string id, string name, List<Reward> rewards)
 			: base(id, name)
 		{
+			if ((Rewards == null || Rewards.Count == 0)) {
+				SoomlaUtils.LogError(TAG, "This reward doesn't make sense without items");
+			}
 			Rewards = rewards;
 		}
 
@@ -51,6 +57,11 @@ namespace Soomla {
 			: base(jsonReward)
 		{
 			List<JSONObject> rewardsObj = jsonReward[JSONConsts.SOOM_REWARDS].list;
+			if ((rewardsObj == null || rewardsObj.Count == 0)) {
+				SoomlaUtils.LogWarning(TAG, "Reward has no meaning without children");
+				rewardsObj = new List<JSONObject>();
+			}
+
 			Rewards = new List<Reward>();
 			foreach(JSONObject rewardObj in rewardsObj) {
 				Rewards.Add(Reward.fromJSONObject(rewardObj));
