@@ -20,7 +20,7 @@ namespace Soomla {
 	
 	public class RewardStorageIOS : RewardStorage {
 
-if UNITY_IOS && !UNITY_EDITOR
+#if UNITY_IOS && !UNITY_EDITOR
 		[DllImport ("__Internal")]
 		private static extern long rewardStorage_GetLastGivenTimeMillis(string rewardJson);
 		[DllImport ("__Internal")]
