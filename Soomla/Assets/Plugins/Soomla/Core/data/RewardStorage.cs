@@ -44,7 +44,7 @@ namespace Soomla
 		}
 
 		public static void SetRewardStatus(Reward reward, bool give, bool notify) {
-			instance._setRewardTimesGiven(reward, give, notify);
+			instance._setTimesGiven(reward, give, notify);
 		}
 
 		public static bool IsRewardGiven(Reward reward) {
@@ -90,7 +90,7 @@ namespace Soomla
 #endif
 		}
 
-		virtual protected void _setRewardTimesGiven(Reward reward, bool up, bool notify) {
+		virtual protected void _setTimesGiven(Reward reward, bool up, bool notify) {
 #if UNITY_EDITOR
 			int total = _getTimesGiven(reward) + (up ? 1 : -1);
 			if(total<0) total = 0;
