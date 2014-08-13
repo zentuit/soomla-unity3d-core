@@ -74,9 +74,21 @@ namespace Soomla {
 		}
 
 		protected override bool giveInner() {
+			List<Reward> canBeGivenRewards = new List<Reward>();
+			foreach(Reward reward in Rewards) {
+				if (reward.CanGive()) {
+					canBeGivenRewards.Add(reward);
+				}
+			}
+
+			if (canBeGivenRewards.Count == 0) {
+				SoomlaUtils.LogDebug(TAG, "No more rewards to give in this Random Reward: " + this.ID);
+				return false;
+			}
+
 			System.Random rand = new System.Random();
-			int n = rand.Next(Rewards.Count);
-			Reward randomReward = Rewards[n];
+			int n = rand.Next(canBeGivenRewards.Count);
+			Reward randomReward = canBeGivenRewards[n];
 			randomReward.Give();
 			LastGivenReward = randomReward;
 			
