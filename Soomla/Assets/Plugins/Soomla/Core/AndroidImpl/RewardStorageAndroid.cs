@@ -39,11 +39,11 @@ namespace Soomla {
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		}
 		
-		override protected void _setRewardTimesGiven(Reward reward, bool up, bool notify) {
+		override protected void _setTimesGiven(Reward reward, bool up, bool notify) {
 
 			AndroidJNI.PushLocalFrame(100);
 			using(AndroidJavaClass jniRewardStorage = new AndroidJavaClass("com.soomla.data.RewardStorage")) {
-				jniRewardStorage.CallStatic("setRewardTimesGiven", reward.toJNIObject(), up, notify);
+				jniRewardStorage.CallStatic("setTimesGiven", reward.toJNIObject(), up, notify);
 			}
 			AndroidJNI.PopLocalFrame(IntPtr.Zero);
 		}
