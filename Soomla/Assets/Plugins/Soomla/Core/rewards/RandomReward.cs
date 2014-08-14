@@ -28,9 +28,7 @@ namespace Soomla {
 	/// "Mayor" badge (<code>BadgeReward</code>) and a speed boost (<code>VirtualItemReward</code>)
 	/// </summary>
 	public class RandomReward : Reward {
-
 		private static string TAG = "SOOMLA RandomReward";
-
 		public List<Reward> Rewards;
 		public Reward LastGivenReward;
 
