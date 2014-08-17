@@ -26,7 +26,7 @@ namespace Soomla {
 		[DllImport ("__Internal")]
 		private static extern int rewardStorage_GetTimesGiven(string rewardJson);
 		[DllImport ("__Internal")]
-		private static extern void rewardStorage_SetRewardTimesGiven(string rewardJson, 
+		private static extern void rewardStorage_SetTimesGiven(string rewardJson, 
 		                                                             [MarshalAs(UnmanagedType.Bool)] bool up, 
 		                                                             [MarshalAs(UnmanagedType.Bool)] bool notify);
 		[DllImport ("__Internal")]
@@ -54,9 +54,9 @@ namespace Soomla {
 			rewardStorage_SetLastSeqIdxGiven(rewardJson, idx);
 		}
 
-		override protected void _setRewardTimesGiven(Reward reward, bool up) {
+		override protected void _setTimesGiven(Reward reward, bool up) {
 			string rewardJson = reward.toJSONObject().ToString();
-			rewardStorage_SetRewardTimesGiven(rewardJson, up, notify);
+			rewardStorage_SetTimesGiven(rewardJson, up, notify);
 		}
 		
 		override protected int _getTimesGiven(Reward reward) {
