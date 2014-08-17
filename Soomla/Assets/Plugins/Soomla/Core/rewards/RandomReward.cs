@@ -28,6 +28,7 @@ namespace Soomla {
 	/// "Mayor" badge (<code>BadgeReward</code>) and a speed boost (<code>VirtualItemReward</code>)
 	/// </summary>
 	public class RandomReward : Reward {
+		private static string TAG = "SOOMLA RandomReward";
 		public List<Reward> Rewards;
 		public Reward LastGivenReward;
 
@@ -40,6 +41,9 @@ namespace Soomla {
 		public RandomReward(string id, string name, List<Reward> rewards)
 			: base(id, name)
 		{
+			if ((Rewards == null || Rewards.Count == 0)) {
+				SoomlaUtils.LogError(TAG, "This reward doesn't make sense without items");
+			}
 			Rewards = rewards;
 		}
 
@@ -51,6 +55,11 @@ namespace Soomla {
 			: base(jsonReward)
 		{
 			List<JSONObject> rewardsObj = jsonReward[JSONConsts.SOOM_REWARDS].list;
+			if ((rewardsObj == null || rewardsObj.Count == 0)) {
+				SoomlaUtils.LogWarning(TAG, "Reward has no meaning without children");
+				rewardsObj = new List<JSONObject>();
+			}
+
 			Rewards = new List<Reward>();
 			foreach(JSONObject rewardObj in rewardsObj) {
 				Rewards.Add(Reward.fromJSONObject(rewardObj));
@@ -74,9 +83,21 @@ namespace Soomla {
 		}
 
 		protected override bool giveInner() {
+			List<Reward> canBeGivenRewards = new List<Reward>();
+			foreach(Reward reward in Rewards) {
+				if (reward.CanGive()) {
+					canBeGivenRewards.Add(reward);
+				}
+			}
+
+			if (canBeGivenRewards.Count == 0) {
+				SoomlaUtils.LogDebug(TAG, "No more rewards to give in this Random Reward: " + this.ID);
+				return false;
+			}
+
 			System.Random rand = new System.Random();
-			int n = rand.Next(Rewards.Count);
-			Reward randomReward = Rewards[n];
+			int n = rand.Next(canBeGivenRewards.Count);
+			Reward randomReward = canBeGivenRewards[n];
 			randomReward.Give();
 			LastGivenReward = randomReward;
 			

@@ -21,43 +21,18 @@ namespace Soomla {
 	public class RewardStorageIOS : RewardStorage {
 
 #if UNITY_IOS && !UNITY_EDITOR
-
 		[DllImport ("__Internal")]
-		private static extern void rewardStorage_SetRewardStatus(string rewardJson,
-		                                                         [MarshalAs(UnmanagedType.Bool)] bool give,
-		                                                         [MarshalAs(UnmanagedType.Bool)] bool notify);
+		private static extern long rewardStorage_GetLastGivenTimeMillis(string rewardJson);
 		[DllImport ("__Internal")]
-		[return:MarshalAs(UnmanagedType.I1)]
-		private static extern bool rewardStorage_IsRewardGiven(string rewardJson);
+		private static extern int rewardStorage_GetTimesGiven(string rewardJson);
+		[DllImport ("__Internal")]
+		private static extern void rewardStorage_SetTimesGiven(string rewardJson, 
+		                                                             [MarshalAs(UnmanagedType.Bool)] bool up, 
+		                                                             [MarshalAs(UnmanagedType.Bool)] bool notify);
 		[DllImport ("__Internal")]
 		private static extern int rewardStorage_GetLastSeqIdxGiven(string rewardJson);
 		[DllImport ("__Internal")]
 		private static extern void rewardStorage_SetLastSeqIdxGiven(string rewardJson, int idx);
-
-		/// <summary>
-		/// Set the reward given status
-		/// </summary>
-		/// <param name="reward">to set status for</param>
-		/// <param name="give">true to give, false to take</param>
-		/// <param name="notify">should this post an event</param>
-		/// <returns></returns>
-		override protected void _setRewardStatus(Reward reward, bool give, bool notify) {
-			string rewardJson = reward.toJSONObject().ToString();
-			rewardStorage_SetRewardStatus(rewardJson, give, notify);
-			
-//			int err = rewardStorage_SetRewardStatus(rewardJson, give);
-//			IOS_ErrorCodes.CheckAndThrowException(err);
-		}
-
-		/// <summary>
-		/// Check the reward given status
-		/// </summary>
-		/// <param name="reward">to query</param>
-		/// <returns>true if reward was given</returns>
-		override protected bool _isRewardGiven(Reward reward) {
-			string rewardJson = reward.toJSONObject().ToString();
-			return rewardStorage_IsRewardGiven(rewardJson);
-		}
 		
 		/// <summary>
 		/// Get last id of given reward from a <c>SequenceReward</c>
@@ -77,7 +52,26 @@ namespace Soomla {
 		override protected void _setLastSeqIdxGiven(SequenceReward seqReward, int idx) {
 			string rewardJson = seqReward.toJSONObject().ToString();
 			rewardStorage_SetLastSeqIdxGiven(rewardJson, idx);
-		}		
+		}
+
+		override protected void _setTimesGiven(Reward reward, bool up) {
+			string rewardJson = reward.toJSONObject().ToString();
+			rewardStorage_SetTimesGiven(rewardJson, up, notify);
+		}
+		
+		override protected int _getTimesGiven(Reward reward) {
+			string rewardJson = reward.toJSONObject().ToString();
+			int times = rewardStorage_GetTimesGiven(rewardJson);
+			SoomlaUtils.LogDebug("SOOMLA/UNITY RewardStorageIOS", string.Format("reward {0} given={1}", reward.ID, times));
+			return times;
+		}
+
+		override protected DateTime _getLastGivenTime(Reward reward) {
+			string rewardJson = seqReward.toJSONObject().ToString();
+			long lastTime = rewardStorage_GetLastGivenTimeMillis(rewardJson);
+			TimeSpan time = TimeSpan.FromMilliseconds(lastTime);
+			return new DateTime(time.Ticks);
+		}
 #endif
 	}
 }

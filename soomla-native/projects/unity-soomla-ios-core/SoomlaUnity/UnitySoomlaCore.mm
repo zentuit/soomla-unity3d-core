@@ -16,26 +16,35 @@ extern "C" {
         [Soomla initializeWithSecret:[NSString stringWithUTF8String:secret]];
     }
 
-    void rewardStorage_SetRewardStatus(const char* sRewardJson, bool give, bool notify) {
+    long rewardStorage_GetLastGivenTimeMillis(const char* sRewardJson) {
         Reward* reward = nil;
         if(sRewardJson) {
             NSString* rewardJson = [NSString stringWithUTF8String:sRewardJson];
             reward = [Reward fromDictionary:[SoomlaUtils jsonStringToDict:rewardJson]];
         }
         
-        [RewardStorage setStatus:give forReward:reward andNotify:notify];
+        return [RewardStorage getLastGivenTimeMillisForReward:reward];
     }
     
-    bool rewardStorage_IsRewardGiven(const char* sRewardJson) {
+    int rewardStorage_GetTimesGiven(const char* sRewardJson) {
         Reward* reward = nil;
         if(sRewardJson) {
             NSString* rewardJson = [NSString stringWithUTF8String:sRewardJson];
             reward = [Reward fromDictionary:[SoomlaUtils jsonStringToDict:rewardJson]];
         }
         
-        return [RewardStorage isRewardGiven:reward];
+        return [RewardStorage getTimesGivenForReward:reward];
     }
     
+    void rewardStorage_SetTimesGiven(const char* sRewardJson, bool up, bool notify) {
+        Reward* reward = nil;
+        if(sRewardJson) {
+            NSString* rewardJson = [NSString stringWithUTF8String:sRewardJson];
+            reward = [Reward fromDictionary:[SoomlaUtils jsonStringToDict:rewardJson]];
+        }
+        
+        [RewardStorage setTimesGivenForReward:reward up:up andNotify:notify];
+    }
 
     int rewardStorage_GetLastSeqIdxGiven(const char* sSeqRewardJson) {
         SequenceReward* seqReward = nil;

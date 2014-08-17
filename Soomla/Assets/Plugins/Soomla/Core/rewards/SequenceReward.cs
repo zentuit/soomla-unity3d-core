@@ -26,6 +26,9 @@ namespace Soomla {
 	///	sequence of: blue belt, yellow belt, green belt, brown belt, black belt
 	/// </summary>
 	public class SequenceReward : Reward {
+
+		private static string TAG = "SOOMLA SequenceReward";
+
 		public List<Reward> Rewards;
 
 		/// <summary>
@@ -37,8 +40,10 @@ namespace Soomla {
 		public SequenceReward(string id, string name, List<Reward> rewards)
 			: base(id, name)
 		{
+			if ((Rewards == null || Rewards.Count == 0)) {
+				SoomlaUtils.LogError(TAG, "This reward doesn't make sense without items");
+			}
 			Rewards = rewards;
-			Repeatable = true;
 		}
 
 		/// <summary>
@@ -49,11 +54,15 @@ namespace Soomla {
 			: base(jsonReward)
 		{
 			List<JSONObject> rewardsObj = jsonReward[JSONConsts.SOOM_REWARDS].list;
+			if ((rewardsObj == null || rewardsObj.Count == 0)) {
+				SoomlaUtils.LogWarning(TAG, "Reward has no meaning without children");
+				rewardsObj = new List<JSONObject>();
+			}
+
 			Rewards = new List<Reward>();
 			foreach(JSONObject rewardObj in rewardsObj) {
 				Rewards.Add(Reward.fromJSONObject(rewardObj));
 			}
-			Repeatable = true;
 		}
 
 		/// <summary>
