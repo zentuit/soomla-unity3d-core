@@ -137,7 +137,7 @@ namespace Soomla
 			TimeSpan time = TimeSpan.FromMilliseconds(timeMillis);
 			return new DateTime(time.Ticks);
 #else
-			return null;
+			return default(DateTime);
 #endif
 		}
 
