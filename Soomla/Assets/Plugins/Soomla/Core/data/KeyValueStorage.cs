@@ -42,11 +42,11 @@ namespace Soomla
 			return _instance._getValue(key);
 		}
 
-		public static void setValue(string key, string val) {
+		public static void SetValue(string key, string val) {
 			_instance._setValue(key, val);
 		}
 
-		public static void deleteKeyValue(string key) {
+		public static void DeleteKeyValue(string key) {
 			_instance._deleteKeyValue(key);
 		}
 
