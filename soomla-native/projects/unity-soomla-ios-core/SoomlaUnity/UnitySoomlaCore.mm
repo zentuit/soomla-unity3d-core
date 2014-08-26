@@ -6,6 +6,7 @@
 #import "SoomlaUtils.h"
 #import "UnitySoomlaCoreEventDispatcher.h"
 #import "SoomlaConfig.h"
+#import "KeyValueStorage.h"
 
 extern "C" {
     void soomlaCore_Init(const char* secret, bool debug) {
@@ -14,6 +15,29 @@ extern "C" {
         DEBUG_LOG = debug;
         [UnitySoomlaCoreEventDispatcher initialize];
         [Soomla initializeWithSecret:[NSString stringWithUTF8String:secret]];
+    }
+    
+    void keyValStorage_GetValue(const char* key, char** retVal) {
+        NSString* keyS = [NSString stringWithUTF8String:key];
+        NSString* valS = [KeyValueStorage getValueForKey:keyS];
+        if (!valS) {
+            valS = @"";
+        }
+        
+        *retVal = Soom_AutonomousStringCopy([valS UTF8String]);
+    }
+    
+    void keyValStorage_SetValue(const char* key, const char* val) {
+        NSString* keyS = [NSString stringWithUTF8String:key];
+        NSString* valS = [NSString stringWithUTF8String:val];
+        
+        [KeyValueStorage setValue:valS forKey:keyS];
+    }
+    
+    void keyValStorage_DeleteKeyValue(const char* key) {
+        NSString* keyS = [NSString stringWithUTF8String:key];
+        
+        [KeyValueStorage deleteValueForKey:keyS];
     }
 
     long rewardStorage_GetLastGivenTimeMillis(const char* sRewardJson) {
