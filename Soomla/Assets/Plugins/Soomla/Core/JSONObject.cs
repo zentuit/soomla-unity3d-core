@@ -8,6 +8,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using Debug = UnityEngine.Debug;
 
 /*
@@ -268,7 +269,7 @@ public class JSONObject : NullCheckable {
 					#endif
 				} else if(str[0] == '"') {
 					type = Type.STRING;
-					this.str = str.Substring(1, str.Length - 2);
+					this.str = Regex.Unescape(str.Substring(1, str.Length - 2));
 				} else {
 					int tokenTmp = 1;
 					/*
