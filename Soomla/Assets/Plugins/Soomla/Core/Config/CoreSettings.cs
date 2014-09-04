@@ -43,8 +43,8 @@ namespace Soomla
 		
 //		GUIContent emptyContent = new GUIContent("");
 
-		GUIContent frameworkVersion = new GUIContent("Framework Version [?]", "The SOOMLA Framework version. ");
-		GUIContent buildVersion = new GUIContent("Framework Build [?]", "The SOOMLA Framework build.");
+		GUIContent frameworkVersion = new GUIContent("Core Version [?]", "The SOOMLA Framework version. ");
+		GUIContent buildVersion = new GUIContent("Core Build [?]", "The SOOMLA Framework build.");
 
 		public void OnEnable() {
 			// Generating AndroidManifest.xml
@@ -56,8 +56,8 @@ namespace Soomla
 		}
 
 		public void OnInfoGUI() {
-			EditorGUILayout.HelpBox("SOOMLA SDK Info", MessageType.None);
-			SoomlaEditorScript.SelectableLabelField(frameworkVersion, "1.5.3");
+			EditorGUILayout.HelpBox("SOOMLA Framework Info", MessageType.None);
+			SoomlaEditorScript.SelectableLabelField(frameworkVersion, "1.0");
 			SoomlaEditorScript.SelectableLabelField(buildVersion, "1");
 			EditorGUILayout.Space();
 		}
