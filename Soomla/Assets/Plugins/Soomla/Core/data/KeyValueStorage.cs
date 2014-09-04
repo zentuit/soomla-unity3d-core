@@ -39,15 +39,15 @@ namespace Soomla
 		}
 			
 		public static string GetValue(string key) {
-			return _instance._getValue(key);
+			return instance._getValue(key);
 		}
 
-		public static void setValue(string key, string val) {
-			_instance._setValue(key, val);
+		public static void SetValue(string key, string val) {
+			instance._setValue(key, val);
 		}
 
-		public static void deleteKeyValue(string key) {
-			_instance._deleteKeyValue(key);
+		public static void DeleteKeyValue(string key) {
+			instance._deleteKeyValue(key);
 		}
 
 		virtual protected string _getValue(string key) {

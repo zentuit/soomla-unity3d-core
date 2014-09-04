@@ -54,7 +54,7 @@ namespace Soomla {
 			rewardStorage_SetLastSeqIdxGiven(rewardJson, idx);
 		}
 
-		override protected void _setTimesGiven(Reward reward, bool up) {
+		override protected void _setTimesGiven(Reward reward, bool up, bool notify) {
 			string rewardJson = reward.toJSONObject().ToString();
 			rewardStorage_SetTimesGiven(rewardJson, up, notify);
 		}
@@ -67,7 +67,7 @@ namespace Soomla {
 		}
 
 		override protected DateTime _getLastGivenTime(Reward reward) {
-			string rewardJson = seqReward.toJSONObject().ToString();
+			string rewardJson = reward.toJSONObject().ToString();
 			long lastTime = rewardStorage_GetLastGivenTimeMillis(rewardJson);
 			TimeSpan time = TimeSpan.FromMilliseconds(lastTime);
 			return new DateTime(time.Ticks);
