@@ -38,7 +38,7 @@ public sealed class ObjectKvp : UnityNameValuePair<string> {
 [System.Serializable]
 public class ObjectDictionary : UnityDictionary<string> {
 	public List<ObjectKvp> values;
-	
+
 	override protected List<UnityKeyValuePair<string, string>> KeyValuePairs {
 		get {
 			if (values == null) {
@@ -50,7 +50,7 @@ public class ObjectDictionary : UnityDictionary<string> {
             {
                 valuesConverted.Add(ConvertOkvp(okvp));
             }
-
+            /*
             foreach (ObjectKvp val in values)
             {
                 Debug.Log(val.Key.ToString());
@@ -60,7 +60,7 @@ public class ObjectDictionary : UnityDictionary<string> {
             {
                 Debug.Log("valuesConverted " + val.Key.ToString() + "###" + val.Value.ToString());
             }
-            
+            */
             return valuesConverted;
 		}
 		set {
@@ -73,7 +73,7 @@ public class ObjectDictionary : UnityDictionary<string> {
             {
                 values.Add(ConvertUkvp(ukvp));
             }
-            Debug.Log(KeyValuePairs.ToString());
+            //Debug.Log(KeyValuePairs.ToString());
 		}
 	}
 

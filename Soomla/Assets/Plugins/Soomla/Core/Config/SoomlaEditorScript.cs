@@ -45,12 +45,12 @@ namespace Soomla
 			{
 				if (instance == null)
 				{
-                    Debug.Log("SoomlaEditorScript is null");
+                    //Debug.Log("SoomlaEditorScript is null");
                     instance = Resources.Load(soomSettingsAssetName) as SoomlaEditorScript;
-                    Debug.Log("SoomlaEditorScript afetr loading SoomlaEditorScript");
+                    //Debug.Log("SoomlaEditorScript afetr loading SoomlaEditorScript");
 					if (instance == null)
 					{
-                        Debug.Log("SoomlaEditorScript is null");
+                        //Debug.Log("SoomlaEditorScript is null");
                         // If not found, autocreate the asset object.
 						instance = CreateInstance<SoomlaEditorScript>();
 #if UNITY_EDITOR
