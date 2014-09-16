@@ -21,7 +21,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-
+using System;
 [System.Serializable]
 public sealed class ObjectKvp : UnityNameValuePair<string> {
 	public string value = null;
@@ -44,10 +44,24 @@ public class ObjectDictionary : UnityDictionary<string> {
 			if (values == null) {
 				values = new List<ObjectKvp>();
 			}
-			return values.ConvertAll<UnityKeyValuePair<string,string>>(new System.Converter<ObjectKvp, UnityKeyValuePair<string,string>>(
-				x => {
-				return x as UnityKeyValuePair<string,string>;
-			}));
+			
+            List<UnityKeyValuePair<string, string>> valuesConverted = new List<UnityKeyValuePair<string, string>>();
+            foreach (ObjectKvp okvp in values)
+            {
+                valuesConverted.Add(ConvertOkvp(okvp));
+            }
+
+            foreach (ObjectKvp val in values)
+            {
+                Debug.Log(val.Key.ToString());
+                Debug.Log("values " + val.Key.ToString() + "###" + val.Value.ToString());
+            }
+            foreach (UnityKeyValuePair<string, string> val in valuesConverted)
+            {
+                Debug.Log("valuesConverted " + val.Key.ToString() + "###" + val.Value.ToString());
+            }
+            
+            return valuesConverted;
 		}
 		set {
 			if (value == null) {
@@ -55,13 +69,22 @@ public class ObjectDictionary : UnityDictionary<string> {
 				return;
 			}
 			
-			values = value.ConvertAll<ObjectKvp>(new System.Converter<UnityKeyValuePair<string,string>, ObjectKvp>(
-				x => {
-				return new ObjectKvp(x.Key, x.Value as string);
-			}));
+            foreach(UnityKeyValuePair<string,string> ukvp in value)
+            {
+                values.Add(ConvertUkvp(ukvp));
+            }
+            Debug.Log(KeyValuePairs.ToString());
 		}
 	}
-	
+
+    public ObjectKvp ConvertUkvp(UnityKeyValuePair<string,string> ukvp)
+    {
+        return new ObjectKvp(ukvp.Key, ukvp.Value);
+    }
+    public UnityKeyValuePair<string, string> ConvertOkvp(ObjectKvp okvp)
+    {
+        return new UnityKeyValuePair<string, string>(okvp.Key,okvp.Value);
+    }
 	override protected void SetKeyValuePair(string k, string v) {
 		var index = values.FindIndex(x => {
 			return x.Key == k;});
