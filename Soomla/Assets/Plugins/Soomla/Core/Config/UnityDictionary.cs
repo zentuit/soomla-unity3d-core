@@ -167,14 +167,25 @@ namespace UnityEngine {
 		}
 		
 		public void CopyTo(KeyValuePair<K, V>[] array, int index) {
-			var copy = KeyValuePairs.ConvertAll<KeyValuePair<K, V>>(
+			/*
+            var copy = KeyValuePairs.ConvertAll<KeyValuePair<K, V>>(
 				new System.Converter<UnityKeyValuePair<K, V>, KeyValuePair<K, V>>(
 				x => {
 				return new KeyValuePair<K, V>(x.Key, (V) x.Value);
 			}));
-			
-			copy.CopyTo(array, index);
+             */
+            List<KeyValuePair<K, V>> copy = new List<KeyValuePair<K, V>>();
+            for (int i = 0; i < KeyValuePairs.Count;i++)
+            {
+                copy[i] = ConvertUkvp(KeyValuePairs[i]);
+            }
+            copy.CopyTo(array, index);
 		}
+
+        public KeyValuePair<K,V> ConvertUkvp(UnityKeyValuePair<K, V> ukvp)
+        {
+            return new KeyValuePair<K,V>(ukvp.Key,(V)ukvp.Value);
+        }
 		
 		IEnumerator IEnumerable.GetEnumerator() {
 			return GetEnumerator() as IEnumerator;
@@ -186,22 +197,44 @@ namespace UnityEngine {
 		
 		public ICollection<K> Keys {
 			get {
-				return KeyValuePairs.ConvertAll(new System.Converter<UnityKeyValuePair<K,V>, K>(x => {
+				/*
+                return KeyValuePairs.ConvertAll(new System.Converter<UnityKeyValuePair<K,V>, K>(x => {
 					return x.Key;}));
+                 * */
+                ICollection<K> keys = new List<K>();
+                foreach(UnityKeyValuePair<K,V> ukvp in KeyValuePairs)
+                {
+                    keys.Add(ukvp.Key);
+                }
+                return keys;
 			}
 		}
 		
 		public ICollection<V> Values {
 			get {
-				return KeyValuePairs.ConvertAll(new System.Converter<UnityKeyValuePair<K,V>, V>(x => {
+				/*
+                return KeyValuePairs.ConvertAll(new System.Converter<UnityKeyValuePair<K,V>, V>(x => {
 					return x.Value;}));
+                 */
+                ICollection<V> values = new List<V>();
+                foreach (UnityKeyValuePair<K, V> ukvp in KeyValuePairs)
+                {
+                    values.Add(ukvp.Value);
+                }
+                return values;
 			}
 		}
 		
 		public ICollection<KeyValuePair<K, V>> Items {
 			get {
-				return KeyValuePairs.ConvertAll<KeyValuePair<K, V>>(new System.Converter<UnityKeyValuePair<K,V>, KeyValuePair<K, V>>(x => {
-					return new KeyValuePair<K, V>(x.Key, x.Value);}));
+				/*return KeyValuePairs.ConvertAll<KeyValuePair<K, V>>(new System.Converter<UnityKeyValuePair<K,V>, KeyValuePair<K, V>>(x => {
+					return new KeyValuePair<K, V>(x.Key, x.Value);}));*/
+                List<KeyValuePair<K,V>> items = new List<KeyValuePair<K,V>>();
+                foreach(UnityKeyValuePair<K,V> value in KeyValuePairs)
+                {
+                    items.Add(new KeyValuePair<K, V>(value.Key, value.Value));
+                }
+                return items;
 			}
 		}
 		

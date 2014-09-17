@@ -45,10 +45,13 @@ namespace Soomla
 			{
 				if (instance == null)
 				{
-					instance = Resources.Load(soomSettingsAssetName) as SoomlaEditorScript;
+                    //Debug.Log("SoomlaEditorScript is null");
+                    instance = Resources.Load(soomSettingsAssetName) as SoomlaEditorScript;
+                    //Debug.Log("SoomlaEditorScript afetr loading SoomlaEditorScript");
 					if (instance == null)
 					{
-						// If not found, autocreate the asset object.
+                        //Debug.Log("SoomlaEditorScript is null");
+                        // If not found, autocreate the asset object.
 						instance = CreateInstance<SoomlaEditorScript>();
 #if UNITY_EDITOR
 						string properPath = Path.Combine(Application.dataPath, soomSettingsPath);
@@ -128,7 +131,7 @@ namespace Soomla
 
 		[SerializeField]
 		public ObjectDictionary SoomlaSettings = new ObjectDictionary();
-
+        
 		public void setSettingsValue(string key, string value) {
 			SoomlaSettings[key] = value;
 		}
