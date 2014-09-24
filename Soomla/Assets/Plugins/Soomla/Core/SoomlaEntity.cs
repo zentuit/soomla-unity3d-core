@@ -173,7 +173,7 @@ namespace Soomla {
 
 		public virtual T Clone(string newId) {
 			JSONObject obj = this.toJSONObject();
-			obj.AddField(JSONConsts.SOOM_ENTITY_ID, newId);
+			obj.SetField(JSONConsts.SOOM_ENTITY_ID, JSONObject.CreateStringObject(newId));
 			return (T) Activator.CreateInstance(this.GetType(), new object[] { obj });
 		}
 	}
