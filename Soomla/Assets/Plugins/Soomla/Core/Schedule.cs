@@ -138,6 +138,7 @@ namespace Soomla {
 		public JSONObject toJSONObject() {
 			JSONObject obj = new JSONObject(JSONObject.Type.OBJECT);
 
+			obj.AddField(JSONConsts.SOOM_CLASSNAME, SoomlaUtils.GetClassName(this));
 			obj.AddField(JSONConsts.SOOM_SCHE_REC, (int)RequiredRecurrence);
 			obj.AddField(JSONConsts.SOOM_SCHE_APPROVALS, ActivationLimit);
 

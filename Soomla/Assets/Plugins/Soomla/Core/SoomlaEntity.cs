@@ -97,7 +97,7 @@ namespace Soomla {
 			obj.AddField(JSONConsts.SOOM_ENTITY_NAME, this.Name);
 			obj.AddField(JSONConsts.SOOM_ENTITY_DESCRIPTION, this.Description);
 			obj.AddField(JSONConsts.SOOM_ENTITY_ID, this._id);
-			obj.AddField(JSONConsts.SOOM_CLASSNAME, GetType().Name);
+			obj.AddField(JSONConsts.SOOM_CLASSNAME, SoomlaUtils.GetClassName(this));
 			
 			return obj;
 		}
