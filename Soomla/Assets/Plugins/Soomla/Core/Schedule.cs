@@ -142,15 +142,20 @@ namespace Soomla {
 			obj.AddField(JSONConsts.SOOM_SCHE_APPROVALS, ActivationLimit);
 
 			JSONObject rangesObj = new JSONObject(JSONObject.Type.ARRAY);
-			foreach(DateTimeRange dtr in TimeRanges) {
-				long startMillis = dtr.Start.Ticks / TimeSpan.TicksPerMillisecond;
-				long endMillis = dtr.End.Ticks / TimeSpan.TicksPerMillisecond;
-				JSONObject singleRange = new JSONObject(JSONObject.Type.OBJECT);
-				singleRange.AddField(JSONConsts.SOOM_SCHE_RANGE_START, startMillis);
-				singleRange.AddField(JSONConsts.SOOM_SCHE_RANGE_END, endMillis);
+			if (TimeRanges != null)
+			{
+				foreach(DateTimeRange dtr in TimeRanges)
+				{
+					long startMillis = dtr.Start.Ticks / TimeSpan.TicksPerMillisecond;
+					long endMillis = dtr.End.Ticks / TimeSpan.TicksPerMillisecond;
+					JSONObject singleRange = new JSONObject(JSONObject.Type.OBJECT);
+					singleRange.AddField(JSONConsts.SOOM_SCHE_RANGE_START, startMillis);
+					singleRange.AddField(JSONConsts.SOOM_SCHE_RANGE_END, endMillis);
 
-				rangesObj.Add(singleRange);
+					rangesObj.Add(singleRange);
+				}
 			}
+
 			obj.AddField(JSONConsts.SOOM_SCHE_RANGES, rangesObj);
 			
 			return obj;
