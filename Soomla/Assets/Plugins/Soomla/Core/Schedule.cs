@@ -138,6 +138,7 @@ namespace Soomla {
 		public JSONObject toJSONObject() {
 			JSONObject obj = new JSONObject(JSONObject.Type.OBJECT);
 
+			obj.AddField(JSONConsts.SOOM_CLASSNAME, SoomlaUtils.GetClassName(this));
 			obj.AddField(JSONConsts.SOOM_SCHE_REC, (int)RequiredRecurrence);
 			obj.AddField(JSONConsts.SOOM_SCHE_APPROVALS, ActivationLimit);
 
@@ -149,6 +150,7 @@ namespace Soomla {
 					long startMillis = dtr.Start.Ticks / TimeSpan.TicksPerMillisecond;
 					long endMillis = dtr.End.Ticks / TimeSpan.TicksPerMillisecond;
 					JSONObject singleRange = new JSONObject(JSONObject.Type.OBJECT);
+					singleRange.AddField(JSONConsts.SOOM_CLASSNAME, SoomlaUtils.GetClassName(dtr));
 					singleRange.AddField(JSONConsts.SOOM_SCHE_RANGE_START, startMillis);
 					singleRange.AddField(JSONConsts.SOOM_SCHE_RANGE_END, endMillis);
 

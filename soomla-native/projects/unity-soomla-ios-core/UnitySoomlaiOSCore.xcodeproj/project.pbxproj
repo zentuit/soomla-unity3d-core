@@ -231,7 +231,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"${UNITY_HEADERS43}/**",
 					"../../../submodules/soomla-ios-core/SoomlaiOSCore/**",
-					"${UNITY_HEADERS45}",
+					"${UNITY_HEADERS45}/**",
 				);
 				LIBRARY_SEARCH_PATHS = ../../../Soomla/Assets/Plugins/iOS;
 				OTHER_LDFLAGS = "-ObjC";
@@ -258,7 +258,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"${UNITY_HEADERS43}/**",
 					"../../../submodules/soomla-ios-core/SoomlaiOSCore/**",
-					"${UNITY_HEADERS45}",
+					"${UNITY_HEADERS45}/**",
 				);
 				LIBRARY_SEARCH_PATHS = ../../../Soomla/Assets/Plugins/iOS;
 				ONLY_ACTIVE_ARCH = NO;
