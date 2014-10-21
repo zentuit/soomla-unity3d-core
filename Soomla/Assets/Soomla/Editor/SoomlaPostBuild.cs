@@ -12,19 +12,19 @@ public class PostProcessScriptStarter : MonoBehaviour {
 		string buildToolsDir = Application.dataPath + @"/Soomla/Editor/build-tools";
 
 		string searchPattern = "Soomla_*.py";  // This would be for you to construct your prefix
-		
+
 		DirectoryInfo di = new DirectoryInfo(buildToolsDir);
 		FileInfo[] files = di.GetFiles(searchPattern);
 
-		foreach (FileInfo fi in files) { 
-			Process proc = new Process();		
+		foreach (FileInfo fi in files) {
+			Process proc = new Process();
 			proc.StartInfo.FileName = "python2.6";
 //			UnityEngine.Debug.Log("Trying to run: " + fi.FullName);
 			proc.StartInfo.Arguments = string.Format("\"{0}\" \"{1}\"", fi.FullName, pathToBuiltProject);
 			proc.StartInfo.UseShellExecute = false;
 			proc.StartInfo.RedirectStandardOutput = true;
 			proc.StartInfo.RedirectStandardError = true;
-			proc.Start(); 
+			proc.Start();
 //			string output = proc.StandardOutput.ReadToEnd();
 			string err = proc.StandardError.ReadToEnd();
 			proc.WaitForExit();
