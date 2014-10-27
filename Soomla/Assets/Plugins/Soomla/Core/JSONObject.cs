@@ -179,11 +179,61 @@ public class JSONObject : NullCheckable {
 		return obj;
 	}
 	public static JSONObject CreateStringObject(string val) {
+		if (!string.IsNullOrEmpty(val)) {
+			val = EncodeJsString(val);
+		}
+
 		JSONObject obj = Create();
 		obj.type = Type.STRING;
 		obj.str = val;
 		return obj;
 	}
+
+	public static string EncodeJsString(string s)
+	{
+		StringBuilder sb = new StringBuilder();
+		foreach (char c in s)
+		{
+			switch (c)
+			{
+			case '\"':
+				sb.Append("\\\"");
+				break;
+			case '\\':
+				sb.Append("\\\\");
+				break;
+			case '\b':
+				sb.Append("\\b");
+				break;
+			case '\f':
+				sb.Append("\\f");
+				break;
+			case '\n':
+				sb.Append("\\n");
+				break;
+			case '\r':
+				sb.Append("\\r");
+				break;
+			case '\t':
+				sb.Append("\\t");
+				break;
+			default:
+				int i = (int)c;
+				if (i < 32 || i > 127)
+				{
+					sb.AppendFormat("\\u{0:X04}", i);
+				}
+				else
+				{
+					sb.Append(c);
+				}
+				break;
+			}
+		}
+		
+		return sb.ToString();
+	}
+
 	public static JSONObject CreateBakedObject(string val) {
 		JSONObject bakedObject = Create();
 		bakedObject.type = Type.BAKED;
