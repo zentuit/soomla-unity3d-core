@@ -48,7 +48,7 @@ namespace Soomla {
 		}
 
 		public static void Initialize() {
-			SoomlaUtils.LogDebug (TAG, "Initializing CoreEvents and Soomla Core ...");
+			SoomlaUtils.LogDebug(TAG, "Initializing CoreEvents and Soomla Core ...");
 #if UNITY_ANDROID && !UNITY_EDITOR
 			AndroidJNI.PushLocalFrame(100);
 
