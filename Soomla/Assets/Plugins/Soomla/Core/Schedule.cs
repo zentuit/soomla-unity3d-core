@@ -45,42 +45,6 @@ namespace Soomla {
 		public List<DateTimeRange> TimeRanges;
 		public int ActivationLimit;
 
-//		public static TimeStrategy Once() {
-//			return Once(default(DateTime));
-//		}
-//
-//		public static TimeStrategy Once(DateTime startTime) {
-//			return Custom(startTime, 1);
-//		}
-//
-//		public static TimeStrategy EveryMonth(DateTime startTime, int repeatTimes) {
-//			return new TimeStrategy(Strategy.EVERYMONTH, startTime, repeatTimes);
-//		}
-//
-//		public static TimeStrategy EveryDay(DateTime startTime, int repeatTimes) {
-//			return new TimeStrategy(Strategy.EVERYDAY, startTime, repeatTimes);
-//		}
-//
-//		public static TimeStrategy EveryHour(DateTime startTime, int repeatTimes) {
-//			return new TimeStrategy(Strategy.EVERYHOUR, startTime, repeatTimes);
-//		}
-//
-//		public static TimeStrategy Custom(int repeatTimes) {
-//			return Custom(default(DateTime), repeatTimes);
-//		}
-//
-//		public static TimeStrategy Custom(DateTime startTime, int repeatTimes) {
-//			return new TimeStrategy(Strategy.CUSTOM, startTime, repeatTimes);
-//		}
-//
-//		public static TimeStrategy Always() {
-//			return Always(default(DateTime));
-//		}
-//
-//		public static TimeStrategy Always(DateTime startTime) {
-//			return new TimeStrategy(Strategy.ALWAYS, startTime, 0);
-//		}
-
 		public static Schedule AnyTimeOnce() {
 			return new Schedule(1);
 		}
