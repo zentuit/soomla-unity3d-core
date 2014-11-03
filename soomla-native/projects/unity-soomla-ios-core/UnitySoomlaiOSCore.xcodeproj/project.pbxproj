@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C08357FD1A07700000B1C672 /* UnityCommons.mm in Sources */ = {isa = PBXBuildFile; fileRef = C08357FC1A07700000B1C672 /* UnityCommons.mm */; };
 		C0B3C5F3168C6D0C00161FAA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0B3C5F2168C6D0C00161FAA /* Foundation.framework */; };
 		C0CF4D60183BDCA80070CC85 /* UnityCommons.h in Headers */ = {isa = PBXBuildFile; fileRef = C0CF4D58183BDCA80070CC85 /* UnityCommons.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C0CF4D64183BDCA80070CC85 /* UnitySoomlaCoreEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = C0CF4D5C183BDCA80070CC85 /* UnitySoomlaCoreEventDispatcher.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -27,6 +28,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C08357FC1A07700000B1C672 /* UnityCommons.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UnityCommons.mm; sourceTree = "<group>"; };
 		C0B3C5EF168C6D0C00161FAA /* libUnitySoomlaiOSCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libUnitySoomlaiOSCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B3C5F2168C6D0C00161FAA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C0CF4D58183BDCA80070CC85 /* UnityCommons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UnityCommons.h; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				C0CF4D58183BDCA80070CC85 /* UnityCommons.h */,
+				C08357FC1A07700000B1C672 /* UnityCommons.mm */,
 				C0CF4D5C183BDCA80070CC85 /* UnitySoomlaCoreEventDispatcher.h */,
 				C0CF4D5D183BDCA80070CC85 /* UnitySoomlaCoreEventDispatcher.mm */,
 				C0CF4D5E183BDCA80070CC85 /* UnitySoomlaCore.mm */,
@@ -166,6 +169,7 @@
 			files = (
 				C0CF4D65183BDCA80070CC85 /* UnitySoomlaCoreEventDispatcher.mm in Sources */,
 				C0CF4D66183BDCA80070CC85 /* UnitySoomlaCore.mm in Sources */,
+				C08357FD1A07700000B1C672 /* UnityCommons.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +226,7 @@
 		C0B3C5FE168C6D0C00161FAA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
 				DSTROOT = /tmp/SoomlaIOSProfile.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = SoomlaUnity.pch;
@@ -243,12 +248,14 @@
 				UNITY_HEADERS45 = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Classes/;
 				UNITY_LIBS43 = "/Applications/Unity/Unity.app/Contents/PlaybackEngines/iPhonePlayer/iPhone-Trampoline/Libraries/";
 				UNITY_LIBS45 = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Libraries/;
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 			};
 			name = Debug;
 		};
 		C0B3C5FF168C6D0C00161FAA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
 				DSTROOT = /tmp/SoomlaIOSProfile.dst;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -271,6 +278,7 @@
 				UNITY_HEADERS45 = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Classes/;
 				UNITY_LIBS43 = "/Applications/Unity/Unity.app/Contents/PlaybackEngines/iPhonePlayer/iPhone-Trampoline/Libraries/";
 				UNITY_LIBS45 = /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport/Trampoline/Libraries/;
+				VALID_ARCHS = "arm64 armv7 armv7s i386 x86_64";
 			};
 			name = Release;
 		};
