@@ -95,11 +95,24 @@ namespace Soomla {
 			CoreEvents.OnRewardTaken(reward);
 		}
 
+		/// <summary>
+		/// Will be called on custom events. Used for internal operations.
+		/// </summary>
+		public void onCustomEvent(string message) {
+			SoomlaUtils.LogDebug(TAG, "SOOMLA/UNITY onCustomEvent:" + message);
+
+			JSONObject rewardObj = new JSONObject(message);
+			string name = rewardObj["name"].str;
+			Dictionary<string, string> extra = rewardObj["extra"].ToDictionary();
+
+			CoreEvents.OnCustomEvent(name, extra);
+		}
 
 		public delegate void Action();
 
 		public static Action<Reward> OnRewardGiven = delegate {};
 		public static Action<Reward> OnRewardTaken = delegate {};
+		public static Action<string, Dictionary<string, string>> OnCustomEvent = delegate {};
 
 	}
 }

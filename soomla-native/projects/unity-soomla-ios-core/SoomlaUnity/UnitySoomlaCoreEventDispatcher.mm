@@ -15,13 +15,7 @@
 
 - (id) init {
     if (self = [super init]) {
-//        [SoomlaEventHandling observeAllEventsWithObserver:self withSelector:@selector(handleEvent:)];
-        
-        // observe only once for the same selector!
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleEvent:) name:@"rewards" object:nil];
-        // NOTE: this caused the action to be called twice??
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleEvent:) name:EVENT_REWARD_GIVEN object:nil];
-//        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleEvent:) name:EVENT_REWARD_TAKEN object:nil];
+        [SoomlaEventHandling observeAllEventsWithObserver:self withSelector:@selector(handleEvent:)];
     }
     
     return self;
@@ -41,6 +35,19 @@
         NSString* rewardJson = [SoomlaUtils dictToJsonString:[reward toDictionary]];
         UnitySendMessage("CoreEvents", "onRewardTaken", [rewardJson UTF8String]);
 	}
+    else if ([notification.name isEqualToString:EVENT_CUSTOM]) {
+        NSDictionary* userInfo = [notification userInfo];
+        NSString* name = [userInfo objectForKey:DICT_ELEMENT_NAME];
+        NSDictionary* extraDict = [userInfo objectForKey:DICT_ELEMENT_EXTRA];
+        if (extraDict) {
+            extraDict = [NSDictionary dictionary];
+        }
+        NSDictionary* eventJSON = @{
+                                    @"name": name,
+                                    @"extra":extraDict
+                                    };
+        UnitySendMessage("CoreEvents", "onCustomEvent", [[SoomlaUtils dictToJsonString:eventJSON] UTF8String]);
+    }
 }
 
 @end
