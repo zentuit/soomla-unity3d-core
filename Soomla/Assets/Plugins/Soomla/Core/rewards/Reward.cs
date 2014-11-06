@@ -15,7 +15,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
-
+using System.Collections.Generic;
 
 namespace Soomla {
 
@@ -49,6 +49,8 @@ namespace Soomla {
 			: base(id, name, "")
 		{
 			Schedule = Schedule.AnyTimeOnce();
+
+			RewardsMap.AddOrUpdate(this.ID, this);
 		}
 
 		/// <summary>
@@ -64,6 +66,8 @@ namespace Soomla {
 			} else {
 				Schedule = null;
 			}
+
+			RewardsMap.AddOrUpdate(this.ID, this);
 		}
 
 		/// <summary>
@@ -91,16 +95,10 @@ namespace Soomla {
 
 			Reward reward = (Reward) Activator.CreateInstance(Type.GetType("Soomla." + className), new object[] { rewardObj });
 
+			RewardsMap.AddOrUpdate(reward.ID, reward);
+
 			return reward;
 		}
-
-#if UNITY_ANDROID && !UNITY_EDITOR
-		public AndroidJavaObject toJNIObject() {
-			using(AndroidJavaClass jniRewardClass = new AndroidJavaClass("com.soomla.rewards.Reward")) {
-				return jniRewardClass.CallStatic<AndroidJavaObject>("fromJSONString", toJSONObject().print());
-			}
-		}
-#endif
 
 		public bool Take() {
 
@@ -139,6 +137,15 @@ namespace Soomla {
 		protected abstract bool giveInner();
 
 		protected abstract bool takeInner();
+
+
+		private static Dictionary<string, Reward> RewardsMap = new Dictionary<string, Reward>();
+		public static Reward GetReward(string rewardID) {
+			Reward reward = null;
+			RewardsMap.TryGetValue(rewardID, out reward);
+
+			return reward;
+		}
 
 	}
 }

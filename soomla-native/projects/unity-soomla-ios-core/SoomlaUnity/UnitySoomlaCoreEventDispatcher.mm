@@ -25,15 +25,23 @@
     
 	if ([notification.name isEqualToString:EVENT_REWARD_GIVEN]) {
         NSDictionary* userInfo = [notification userInfo];
-        Reward* reward = [userInfo objectForKey:DICT_ELEMENT_REWARD];
-        NSString* rewardJson = [SoomlaUtils dictToJsonString:[reward toDictionary]];
-        UnitySendMessage("CoreEvents", "onRewardGiven", [rewardJson UTF8String]);
+        NSString* rewardId = [userInfo objectForKey:DICT_ELEMENT_REWARD];
+        
+        NSDictionary* eventJSON = @{
+                                    @"rewardId": rewardId
+                                    };
+        
+        UnitySendMessage("CoreEvents", "onRewardGiven", [[SoomlaUtils dictToJsonString:eventJSON] UTF8String]);
 	}
 	else if ([notification.name isEqualToString:EVENT_REWARD_TAKEN]) {
         NSDictionary* userInfo = [notification userInfo];
-        Reward* reward = [userInfo objectForKey:DICT_ELEMENT_REWARD];
-        NSString* rewardJson = [SoomlaUtils dictToJsonString:[reward toDictionary]];
-        UnitySendMessage("CoreEvents", "onRewardTaken", [rewardJson UTF8String]);
+        NSString* rewardId = [userInfo objectForKey:DICT_ELEMENT_REWARD];
+        
+        NSDictionary* eventJSON = @{
+                                    @"rewardId": rewardId
+                                    };
+        
+        UnitySendMessage("CoreEvents", "onRewardTaken", [[SoomlaUtils dictToJsonString:eventJSON] UTF8String]);
 	}
     else if ([notification.name isEqualToString:EVENT_CUSTOM]) {
         NSDictionary* userInfo = [notification userInfo];

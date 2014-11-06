@@ -26,12 +26,25 @@ public class SoomlaEventHandler {
 
     @Subscribe
     public void onRewardGiven(RewardGivenEvent rewardGivenEvent) {
-        UnityPlayer.UnitySendMessage("CoreEvents", "onRewardGiven", rewardGivenEvent.Reward.toJSONObject().toString());
+
+        try {
+            JSONObject eventJSON = new JSONObject();
+            eventJSON.put("rewardId", rewardGivenEvent.RewardId);
+            UnityPlayer.UnitySendMessage("CoreEvents", "onRewardGiven", eventJSON.toString());
+        } catch (JSONException e) {
+            SoomlaUtils.LogError("SOOMLA SoomlaEventHandler", "This is BAD! couldn't create JSON for onRewardGiven event.");
+        }
     }
 
     @Subscribe
     public void onRewardGiven(RewardTakenEvent rewardTakenEvent) {
-        UnityPlayer.UnitySendMessage("CoreEvents", "onRewardTaken", rewardTakenEvent.Reward.toJSONObject().toString());
+        try {
+            JSONObject eventJSON = new JSONObject();
+            eventJSON.put("rewardId", rewardTakenEvent.RewardId);
+            UnityPlayer.UnitySendMessage("CoreEvents", "onRewardTaken", eventJSON.toString());
+        } catch (JSONException e) {
+            SoomlaUtils.LogError("SOOMLA SoomlaEventHandler", "This is BAD! couldn't create JSON for onRewardGiven event.");
+        }
     }
 
     @Subscribe

@@ -40,53 +40,33 @@ extern "C" {
         [KeyValueStorage deleteValueForKey:keyS];
     }
 
-    long rewardStorage_GetLastGivenTimeMillis(const char* sRewardJson) {
-        Reward* reward = nil;
-        if(sRewardJson) {
-            NSString* rewardJson = [NSString stringWithUTF8String:sRewardJson];
-            reward = [Reward fromDictionary:[SoomlaUtils jsonStringToDict:rewardJson]];
-        }
+    long rewardStorage_GetLastGivenTimeMillis(const char* rewardId) {
+        NSString* rewardIdS = [NSString stringWithUTF8String:rewardId];
         
-        return [RewardStorage getLastGivenTimeMillisForReward:reward];
+        return [RewardStorage getLastGivenTimeMillisForReward:rewardIdS];
     }
     
-    int rewardStorage_GetTimesGiven(const char* sRewardJson) {
-        Reward* reward = nil;
-        if(sRewardJson) {
-            NSString* rewardJson = [NSString stringWithUTF8String:sRewardJson];
-            reward = [Reward fromDictionary:[SoomlaUtils jsonStringToDict:rewardJson]];
-        }
+    int rewardStorage_GetTimesGiven(const char* rewardId) {
+        NSString* rewardIdS = [NSString stringWithUTF8String:rewardId];
         
-        return [RewardStorage getTimesGivenForReward:reward];
+        return [RewardStorage getTimesGivenForReward:rewardIdS];
     }
     
-    void rewardStorage_SetTimesGiven(const char* sRewardJson, bool up, bool notify) {
-        Reward* reward = nil;
-        if(sRewardJson) {
-            NSString* rewardJson = [NSString stringWithUTF8String:sRewardJson];
-            reward = [Reward fromDictionary:[SoomlaUtils jsonStringToDict:rewardJson]];
-        }
+    void rewardStorage_SetTimesGiven(const char* rewardId, bool up, bool notify) {
+        NSString* rewardIdS = [NSString stringWithUTF8String:rewardId];
         
-        [RewardStorage setTimesGivenForReward:reward up:up andNotify:notify];
+        [RewardStorage setTimesGivenForReward:rewardIdS up:up andNotify:notify];
     }
 
-    int rewardStorage_GetLastSeqIdxGiven(const char* sSeqRewardJson) {
-        SequenceReward* seqReward = nil;
-        if(sSeqRewardJson) {
-            NSString* seqRewardJson = [NSString stringWithUTF8String:sSeqRewardJson];
-            seqReward = (SequenceReward*)[Reward fromDictionary:[SoomlaUtils jsonStringToDict:seqRewardJson]];
-        }
+    int rewardStorage_GetLastSeqIdxGiven(const char* rewardId) {
+        NSString* rewardIdS = [NSString stringWithUTF8String:rewardId];
         
-        return [RewardStorage getLastSeqIdxGivenForReward:seqReward];
+        return [RewardStorage getLastSeqIdxGivenForSequenceReward:rewardIdS];
     }
 
-    void rewardStorage_SetLastSeqIdxGiven(const char* sSeqRewardJson, int idx) {
-        SequenceReward* seqReward = nil;
-        if(sSeqRewardJson) {
-            NSString* seqRewardJson = [NSString stringWithUTF8String:sSeqRewardJson];
-            seqReward = (SequenceReward*)[Reward fromDictionary:[SoomlaUtils jsonStringToDict:seqRewardJson]];
-        }
+    void rewardStorage_SetLastSeqIdxGiven(const char* rewardId, int idx) {
+        NSString* rewardIdS = [NSString stringWithUTF8String:rewardId];
         
-        return [RewardStorage setLastSeqIdxGiven:idx ForReward:seqReward];
+        return [RewardStorage setLastSeqIdxGiven:idx ForSequenceReward:rewardIdS];
     }    
 }
