@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.IO;
 
 public class PostProcessScriptStarter : MonoBehaviour {
-	[PostProcessBuild]
+	[PostProcessBuild(1000)]
 	public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject) {
 #if UNITY_IOS
 		string buildToolsDir = Application.dataPath + @"/Soomla/Editor/build-tools";
