@@ -37,7 +37,7 @@ public class SoomlaEventHandler {
     }
 
     @Subscribe
-    public void onRewardGiven(RewardTakenEvent rewardTakenEvent) {
+    public void onRewardTaken(RewardTakenEvent rewardTakenEvent) {
         try {
             JSONObject eventJSON = new JSONObject();
             eventJSON.put("rewardId", rewardTakenEvent.RewardId);
