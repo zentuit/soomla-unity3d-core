@@ -147,5 +147,12 @@ namespace Soomla {
 			return reward;
 		}
 
+		public static List<Reward> GetRewards(){
+			List<Reward> rewards = new List<Reward> ();
+			foreach(Reward reward in RewardsMap.Values)
+				rewards.Add(reward);
+
+			return rewards;
+		}
 	}
 }
