@@ -16,6 +16,14 @@ It includes:
 
 SOOMLA modules internally use these features, though we encourage you to use them for your own needs as well.  The settings panel utilities and post-build utilities should be used when creating a SOOMLA plugin for Unity.
 
+
+## Download
+
+####Pre baked unitypackage:
+
+[soomla-unity3d-core 1.0.1](http://library.soom.la/fetch/unity3d-core/1.0.1?cf=github)
+
+
 Contribution
 ---
 SOOMLA appreciates code contributions! You are more than welcome to extend the capabilities of SOOMLA.
