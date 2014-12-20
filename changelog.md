@@ -1,3 +1,8 @@
+### v1.0.2 [view commit logs](https://github.com/soomla/soomla-unity3d-core/compare/v1.0.1...v1.0.2)
+
+* Changes
+  * Updated submodules
+
 ### v1.0.1 [view commit logs](https://github.com/soomla/soomla-unity3d-core/compare/v1.0.0...v1.0.1)
 
 * Fixes
