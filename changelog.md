@@ -1,3 +1,9 @@
+### v1.0.3 [view commit logs](https://github.com/soomla/soomla-unity3d-core/compare/v1.0.2...v1.0.3)
+
+* New Features
+  * Added option to disable Soomla Unity based messages (Thanks @zentuit)
+  * Updated new features from submodules
+
 ### v1.0.2 [view commit logs](https://github.com/soomla/soomla-unity3d-core/compare/v1.0.1...v1.0.2)
 
 * Changes
