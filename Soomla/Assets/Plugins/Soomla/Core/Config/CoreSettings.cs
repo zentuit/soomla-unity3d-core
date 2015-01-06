@@ -57,7 +57,7 @@ namespace Soomla
 
 		public void OnInfoGUI() {
 			EditorGUILayout.HelpBox("SOOMLA Framework Info", MessageType.None);
-			SoomlaEditorScript.SelectableLabelField(frameworkVersion, "1.0.2");
+			SoomlaEditorScript.SelectableLabelField(frameworkVersion, "1.0.3");
 			SoomlaEditorScript.SelectableLabelField(buildVersion, "1");
 			EditorGUILayout.Space();
 		}
@@ -130,7 +130,7 @@ namespace Soomla
 				}
 			}
 		}
-		
+
 		public static bool DebugMessages
 		{
 			get {
@@ -148,7 +148,7 @@ namespace Soomla
 				}
 			}
 		}
-		
+
 		public static bool DebugUnityMessages
 		{
 			get {
