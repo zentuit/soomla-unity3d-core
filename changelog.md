@@ -1,3 +1,9 @@
+### v1.0.5 [view commit logs](https://github.com/soomla/soomla-unity3d-core/compare/v1.0.4...v1.0.5)
+
+* Fixes
+  * Fixing issue with native KVS iOS via submodule
+  * Fixing AsyncTask class not found exception (Android) via submodule
+
 ### v1.0.4 [view commit logs](https://github.com/soomla/soomla-unity3d-core/compare/v1.0.3...v1.0.4)
 
 * Changes
