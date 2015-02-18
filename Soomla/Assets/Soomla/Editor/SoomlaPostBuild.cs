@@ -40,8 +40,8 @@ public class PostProcessScriptStarter : MonoBehaviour {
 			proc.WaitForExit();
 //			UnityEngine.Debug.Log("out: " + output);
 			if (proc.ExitCode != 0) {
-				UnityEngine.Debug.Log("error: " + err + "   code: " + proc.ExitCode);
-			}
+                UnityEngine.Debug.LogError("error: " + err + "   code: " + proc.ExitCode);
+            }
 		}
 #endif
     }
