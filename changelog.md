@@ -1,3 +1,12 @@
+### v1.0.6 [view commit logs](https://github.com/soomla/soomla-unity3d-core/compare/v1.0.5...v1.0.6)
+
+* Changes
+  * Added post build script for core
+
+* Fixes
+  * Log error in post build runner
+  * Fixing issues with RandomReward and SequenceReward
+
 ### v1.0.5 [view commit logs](https://github.com/soomla/soomla-unity3d-core/compare/v1.0.4...v1.0.5)
 
 * Fixes
