@@ -60,7 +60,7 @@ namespace Soomla {
 		}
 #endif
 
-#if UNITY_WP8
+#if UNITY_WP8 && !UNITY_EDITOR
 		protected SoomlaEntity(SoomlaWpCore.SoomlaEntity wpSoomlaEntity) {
             this.Name = wpSoomlaEntity.GetName();
             this.Description = wpSoomlaEntity.GetDescription();

@@ -19,7 +19,7 @@ namespace Soomla {
 	
 	public class RewardStorageWP : RewardStorage {
 
-#if UNITY_WP8 && UNITY_EDITOR
+#if UNITY_WP8 && !UNITY_EDITOR
 		
 		override protected int _getLastSeqIdxGiven(SequenceReward reward) {
 			int idx = -1;
