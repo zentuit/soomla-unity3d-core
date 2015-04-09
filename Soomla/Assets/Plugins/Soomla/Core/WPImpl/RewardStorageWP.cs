@@ -19,35 +19,26 @@ namespace Soomla {
 	
 	public class RewardStorageWP : RewardStorage {
 
-#if UNITY_WP8 && UNITY_EDITOR
+#if UNITY_WP8 && !UNITY_EDITOR
 		
 		override protected int _getLastSeqIdxGiven(SequenceReward reward) {
-			int idx = -1;
-            SoomlaUtils.LogDebug("RewardStorageWP", "TODO implement _getLastSeqIdxGiven");
-			return idx;
+            return SoomlaWpCore.data.RewardStorage.GetLastSeqIdxGiven(reward.ID);
 		}
 		
 		override protected void _setLastSeqIdxGiven(SequenceReward reward, int idx) {
-            SoomlaUtils.LogDebug("RewardStorageWP", "TODO implement _setLastSeqIdxGiven");
+            SoomlaWpCore.data.RewardStorage.SetLastSeqIdxGiven(reward.ID, idx);
 		}
 		
 		override protected void _setTimesGiven(Reward reward, bool up, bool notify) {
-
-            SoomlaUtils.LogDebug("RewardStorageWP", "TODO implement _setTimesGiven");
+            SoomlaWpCore.data.RewardStorage.SetTimesGiven(reward.ID, up, notify);
 		}
 		
 		override protected int _getTimesGiven(Reward reward) {
-			int times = 0;
-            SoomlaUtils.LogDebug("RewardStorageWP", "TODO implement _getTimesGiven");
-			return times;
+			return SoomlaWpCore.data.RewardStorage.GetTimesGiven(reward.ID);
 		}
 		
 		override protected DateTime _getLastGivenTime(Reward reward) {
-			long lastTime = 0;
-            SoomlaUtils.LogDebug("RewardStorageWP", "TODO implement _getLastGivenTime");
-
-			TimeSpan time = TimeSpan.FromMilliseconds(lastTime);
-			return new DateTime(time.Ticks);
+            return SoomlaWpCore.data.RewardStorage.GetLastGivenTime(reward.ID);
 		}
 
 

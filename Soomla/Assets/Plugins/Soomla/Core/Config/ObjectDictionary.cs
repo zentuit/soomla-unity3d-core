@@ -66,7 +66,7 @@ public class ObjectDictionary : UnityDictionary<string> {
 		}
 	}
 
-    public ObjectKvp ConvertUkvp(UnityKeyValuePair<string,string> ukvp)
+    public new ObjectKvp ConvertUkvp(UnityKeyValuePair<string,string> ukvp)
     {
         return new ObjectKvp(ukvp.Key, ukvp.Value);
     }
