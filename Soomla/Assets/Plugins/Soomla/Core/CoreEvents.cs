@@ -40,6 +40,7 @@ namespace Soomla {
 		void Awake(){
 			if(instance == null){ 	// making sure we only initialize one instance.
 				instance = this;
+                gameObject.name = "CoreEvents";
 				GameObject.DontDestroyOnLoad(this.gameObject);
 				Initialize();
 			} else {				// Destroying unused instances.
