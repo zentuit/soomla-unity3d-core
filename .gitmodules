@@ -4,3 +4,6 @@
 [submodule "submodules/soomla-android-core"]
 	path = submodules/soomla-android-core
 	url = git@github.com:soomla/soomla-android-core.git
+[submodule "submodules/soomla-wp-core"]
+	path = submodules/soomla-wp-core
+	url = git@github.com:soomla/soomla-wp-core.git
