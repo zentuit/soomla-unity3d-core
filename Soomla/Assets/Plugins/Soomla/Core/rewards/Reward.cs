@@ -103,7 +103,9 @@ namespace Soomla {
 		public bool Take() {
 
 			if (!RewardStorage.IsRewardGiven(this)) {
+				#if DEBUG_SOOMLA
 				SoomlaUtils.LogDebug(TAG, "Reward not given. id: " + _id);
+				#endif
 				return false;
 			}
 
@@ -122,7 +124,9 @@ namespace Soomla {
 		public bool Give() {
 
 			if (!CanGive()) {
+				#if DEBUG_SOOMLA
 				SoomlaUtils.LogDebug(TAG, "(Give) Reward is not approved by Schedule. id: " + _id);
+				#endif
 				return false;
 			}
 
