@@ -21,8 +21,9 @@ using System;
 namespace Soomla {	
 
 	public class Schedule {
-
-		private static string TAG = "SOOMLA Schedule";
+		#if DEBUG_SOOMLA
+        private static string TAG = "SOOMLA Schedule";
+		#endif
 
 		public enum Recurrence {
 			EVERY_MONTH,

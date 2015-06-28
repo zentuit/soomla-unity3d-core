@@ -30,7 +30,9 @@ namespace Soomla {
 	/// You can give your user 100 coins for logging in through Facebook.
 	/// </summary>
 	public abstract class Reward : SoomlaEntity<Reward> {
-		private static string TAG = "SOOMLA Reward";
+		#if DEBUG_SOOMLA
+        private static string TAG = "SOOMLA Reward";
+		#endif
 
 		public Schedule Schedule;
 
